@@ -2,20 +2,6 @@
 
 ToDoList App
 
-## Installation
-
-```bash
-
-$ rm -rf .git
-$ git init
-$ git remote add origin https://github.com/your_nickname/your-repo-name.git
-$ git branch -M main
-$ git push -u origin main
-$ npm install
-$ nom run prepare
-$ npm run dev
-```
-
 ## Running the app
 
 ```bash
