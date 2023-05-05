@@ -1,5 +1,6 @@
 // import { HelloWorld } from 'components/HelloWorld';
 import { useState } from 'react';
+import { v1 } from 'uuid';
 import './index.scss';
 import { TodoList, PropsType } from 'components/TodoList/TodoList';
 
@@ -7,22 +8,29 @@ export type FilterValueTypes = 'all' | 'active' | 'completed';
 
 export const App = () => {
   const initTasks: Array<PropsType> = [
-    { id: 1, title: 'first', isDone: true },
-    { id: 2, title: 'second', isDone: false },
-    { id: 3, title: 'third', isDone: false },
+    { id: v1(), title: 'first', isDone: true },
+    { id: v1(), title: 'second', isDone: false },
+    { id: v1(), title: 'third', isDone: false },
   ];
+  console.log('initTasks :>> ', initTasks);
 
   const [tasks, setTasks] = useState(initTasks);
   const [filter, setFilter] = useState<FilterValueTypes>('all');
 
-  function removeTask(id: number) {
+  function removeTask(id: string) {
     const filtredTasks = tasks.filter((t) => t.id !== id);
     setTasks(filtredTasks);
   }
 
-  function changeFilter(value: FilterValueTypes) {
-    console.log('value :>> ', value);
-    setFilter(value);
+  function changeFilter(filterValue: FilterValueTypes) {
+    setFilter(filterValue);
+  }
+
+  function addTask(titleValue: string) {
+    console.log('value :>> ', titleValue);
+    const newTask: PropsType = { id: v1(), title: titleValue, isDone: false };
+    const newTasks = [newTask, ...tasks];
+    setTasks(newTasks);
   }
 
   let tasksForTodoList = tasks;
@@ -41,6 +49,7 @@ export const App = () => {
         title="Task Title"
         removeTask={removeTask}
         changeFilter={changeFilter}
+        addTask={addTask}
       />
     </div>
   );

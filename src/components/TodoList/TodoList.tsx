@@ -1,48 +1,83 @@
 import { FilterValueTypes } from 'app';
 import './TodoList.scss';
+import { ChangeEvent, KeyboardEvent, useState } from 'react';
 
 export type PropsType = {
   title: string;
-  id: number;
+  id: string;
   isDone: boolean;
 };
 
 type TodoListPropsType = {
   tasks: PropsType[];
   title: string;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  removeTask: (id: number) => void;
+  removeTask: (id: string) => void;
   changeFilter: (value: FilterValueTypes) => void;
+  addTask: (title: string) => void;
 };
 
 export const TodoList = (props: TodoListPropsType) => {
+  const [newTaskTitle, setNewTaskTitle] = useState('');
+
+  const onNewTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setNewTaskTitle(e.currentTarget.value);
+  };
+
+  const onEnterKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      props.addTask(newTaskTitle);
+      setNewTaskTitle('');
+    }
+  };
+
+  const addTask = () => {
+    props.addTask(newTaskTitle);
+    setNewTaskTitle('');
+  };
+
+  const AllClickHandler = () => {
+    props.changeFilter('all');
+  };
+
+  const ActiveClickHandler = () => {
+    props.changeFilter('active');
+  };
+
+  const CompletedClickHandler = () => {
+    props.changeFilter('completed');
+  };
+
   return (
     <div className="card">
       <h3 className="card__title">{props.title}</h3>
       <div className="card__input-line">
-        <input />
-        <button>+</button>
+        <input
+          value={newTaskTitle}
+          onChange={onNewTitleChangeHandler}
+          onKeyDown={onEnterKeyPressHandler}
+        />
+        <button onClick={addTask}>+</button>
       </div>
       <ul className="card__todo-items">
-        {props.tasks.map((t) => (
-          <li key={t.id} className="todo-item">
-            <input className="todo-item__input" type="checkbox" checked={t.isDone} />
-            <span className="todo-item__text">{t.title}</span>
-            <button
-              className="todo-item__remove-button"
-              onClick={() => {
-                props.removeTask(t.id);
-              }}
-            >
-              x
-            </button>
-          </li>
-        ))}
+        {props.tasks.map((task) => {
+          const onRemoveHandler = () => {
+            props.removeTask(task.id);
+          };
+          return (
+            <li key={task.id} className="todo-item">
+              <input className="todo-item__input" type="checkbox" checked={task.isDone} />
+              <span className="todo-item__text">{task.title}</span>
+              <button className="todo-item__remove-button" onClick={onRemoveHandler}>
+                x
+              </button>
+            </li>
+          );
+        })}
       </ul>
       <div className="card__buttons">
-        <button onClick={() => props.changeFilter('all')}>all</button>
-        <button onClick={() => props.changeFilter('active')}>active</button>
-        <button onClick={() => props.changeFilter('completed')}>completed</button>
+        <button onClick={AllClickHandler}>all</button>
+        <button onClick={ActiveClickHandler}>active</button>
+        <button onClick={CompletedClickHandler}>completed</button>
       </div>
     </div>
   );
