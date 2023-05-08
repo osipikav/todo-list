@@ -12,10 +12,10 @@ export const App = () => {
     { id: v1(), title: 'second', isDone: false },
     { id: v1(), title: 'third', isDone: false },
   ];
-  console.log('initTasks :>> ', initTasks);
 
   const [tasks, setTasks] = useState(initTasks);
   const [filter, setFilter] = useState<FilterValueTypes>('all');
+  // const [isDone, setIsDone] = useState(false);
 
   function removeTask(id: string) {
     const filtredTasks = tasks.filter((t) => t.id !== id);
@@ -31,6 +31,17 @@ export const App = () => {
     const newTask: PropsType = { id: v1(), title: titleValue, isDone: false };
     const newTasks = [newTask, ...tasks];
     setTasks(newTasks);
+  }
+
+  function changeIsDone(taskId: string) {
+    // console.log('object :>> ', !isDone);
+    const task = tasks.find((t) => t.id === taskId);
+    if (task) {
+      task.isDone = !task.isDone;
+    }
+    setTasks(tasks);
+    console.log('task :>> ', task);
+    // setIsDone(!isDone);
   }
 
   let tasksForTodoList = tasks;
@@ -50,6 +61,7 @@ export const App = () => {
         removeTask={removeTask}
         changeFilter={changeFilter}
         addTask={addTask}
+        changeIsDone={changeIsDone}
       />
     </div>
   );
