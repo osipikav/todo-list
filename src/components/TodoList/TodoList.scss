@@ -57,3 +57,23 @@
     }
   }
 }
+
+.text-center {
+  text-align: center;
+}
+
+.error {
+  border: red 1px solid;
+}
+
+.error-message {
+  color: red;
+}
+
+.active-filter {
+  background-color: aqua;
+}
+
+.is-done {
+  opacity: 0.5;
+}

@@ -15,7 +15,6 @@ export const App = () => {
 
   const [tasks, setTasks] = useState(initTasks);
   const [filter, setFilter] = useState<FilterValueTypes>('all');
-  // const [isDone, setIsDone] = useState(false);
 
   function removeTask(id: string) {
     const filtredTasks = tasks.filter((t) => t.id !== id);
@@ -33,15 +32,12 @@ export const App = () => {
     setTasks(newTasks);
   }
 
-  function changeIsDone(taskId: string) {
-    // console.log('object :>> ', !isDone);
+  function changeStatus(taskId: string) {
     const task = tasks.find((t) => t.id === taskId);
     if (task) {
       task.isDone = !task.isDone;
     }
-    setTasks(tasks);
-    console.log('task :>> ', task);
-    // setIsDone(!isDone);
+    setTasks([...tasks]);
   }
 
   let tasksForTodoList = tasks;
@@ -61,7 +57,8 @@ export const App = () => {
         removeTask={removeTask}
         changeFilter={changeFilter}
         addTask={addTask}
-        changeIsDone={changeIsDone}
+        changeTaskStatus={changeStatus}
+        filter={filter}
       />
     </div>
   );
