@@ -1,10 +1,12 @@
-import { HelloWorld } from 'components/HelloWorld';
+import { ToDoList } from 'components/ToDoList';
 import './index.scss';
 
 export const App = () => {
   return (
     <div className="App">
-      <HelloWorld />
+      <ToDoList />
+      <ToDoList />
+      <ToDoList />
     </div>
   );
 };
