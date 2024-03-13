@@ -4,14 +4,14 @@ import { useState } from 'react';
 import { v1 } from 'uuid';
 
 export const App = () => {
-  const initTasks: TaskType[] = [
+  const initTasks = [
     { id: v1(), task: 'task 1', isDone: true },
     { id: v1(), task: 'task 2', isDone: false },
     { id: v1(), task: 'task 3', isDone: false },
   ];
 
-  const [tasks, setTasks] = useState(initTasks);
-  const [filter, setFilter] = useState('all');
+  const [tasks, setTasks] = useState<TaskType[]>(initTasks);
+  const [filter, setFilter] = useState<FilterTypes>('all');
 
   function removeTask(id: string) {
     const updatedTasks = tasks.filter((t) => t.id !== id);
@@ -28,8 +28,12 @@ export const App = () => {
     setTasks(newTasksArray);
   }
 
-  function changeCheckMark() {
-    console.log('hi');
+  function changeTaskStatus(taskId: string) {
+    const task = tasks.find((t) => taskId === t.id);
+    if (task) {
+      task.isDone = !task.isDone;
+    }
+    setTasks([...tasks]);
   }
 
   let tasksForToDoList = tasks;
@@ -48,7 +52,8 @@ export const App = () => {
         title={'title'}
         changeFilter={changeFilter}
         addTask={addTask}
-        changeCheckMark={changeCheckMark}
+        changeTaskStatus={changeTaskStatus}
+        filter={filter}
       />
     </div>
   );

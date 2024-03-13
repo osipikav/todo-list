@@ -16,13 +16,27 @@ body {
 .App {
   padding: 30px;
   display: flex;
-  }
+}
 
 .container {
   max-width: 300px;
   background-color: rgb(47, 77, 77);
-  display:flex;
+  display: flex;
   align-items: center;
   flex-direction: column;
   gap: 20px;
-  }
+}
+
+.error {
+  border: red 1px solid;
+}
+
+.error-message {
+  color: red;
+}
+.active-filter {
+  background-color: aquamarine;
+}
+.is-done {
+  opacity: 0.5;
+}
