@@ -3,11 +3,12 @@ import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 export type FilterTypes = 'all' | 'active' | 'complited';
 
 type PropsType = {
+  id: string;
   title?: string;
   tasks: TaskType[];
   removeTask: (taskId: string) => void;
-  changeFilter: (filterValue: FilterTypes) => void;
-  addTask: (value: string) => void;
+  changeFilter: (filterValue: FilterTypes, todolistId: string) => void;
+  addTask: (value: string, todolistId: string) => void;
   changeTaskStatus: (taskId: string) => void;
   filter: FilterTypes;
 };
@@ -28,7 +29,7 @@ export function ToDoList(props: PropsType) {
   }
   function onNewTitleKeyDownHandler(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
-      props.addTask(newTaskTitle);
+      props.addTask(newTaskTitle, props.id);
       setNewTaskTitle('');
     }
   }
@@ -38,20 +39,20 @@ export function ToDoList(props: PropsType) {
       setError('Field is required');
       return;
     }
-    props.addTask(validTaskTitle);
+    props.addTask(validTaskTitle, props.id);
     setNewTaskTitle('');
   }
 
   function onAllClickHandler() {
-    props.changeFilter('all');
+    props.changeFilter('all', props.id);
   }
 
   function onActiveClickHandler() {
-    props.changeFilter('active');
+    props.changeFilter('active', props.id);
   }
 
   function onComplitedClickHandler() {
-    props.changeFilter('complited');
+    props.changeFilter('complited', props.id);
   }
 
   return (
