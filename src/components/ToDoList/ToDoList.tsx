@@ -6,10 +6,10 @@ type PropsType = {
   id: string;
   title?: string;
   tasks: TaskType[];
-  removeTask: (taskId: string) => void;
+  removeTask: (taskId: string, todolistId: string) => void;
   changeFilter: (filterValue: FilterTypes, todolistId: string) => void;
   addTask: (value: string, todolistId: string) => void;
-  changeTaskStatus: (taskId: string) => void;
+  changeTaskStatus: (taskId: string, todolistId: string) => void;
   filter: FilterTypes;
 };
 
@@ -72,11 +72,11 @@ export function ToDoList(props: PropsType) {
       <ul>
         {props.tasks.map((task: TaskType) => {
           function onChangeHandler() {
-            props.changeTaskStatus(task.id);
+            props.changeTaskStatus(task.id, props.id);
           }
 
           function removeTask() {
-            props.removeTask(task.id);
+            props.removeTask(task.id, props.id);
           }
           return (
             <li key={task.id}>
