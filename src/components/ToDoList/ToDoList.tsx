@@ -11,6 +11,7 @@ type PropsType = {
   addTask: (value: string, todolistId: string) => void;
   changeTaskStatus: (taskId: string, todolistId: string) => void;
   filter: FilterTypes;
+  removeTaskList: (todolistId: string) => void;
 };
 
 export interface TaskType {
@@ -57,7 +58,10 @@ export function ToDoList(props: PropsType) {
 
   return (
     <div className="container">
-      <h2>{props.title}</h2>
+      <h2>
+        {props.title} <button onClick={() => props.removeTaskList(props.id)}>x</button>
+      </h2>
+
       <div>
         <input
           value={newTaskTitle}
