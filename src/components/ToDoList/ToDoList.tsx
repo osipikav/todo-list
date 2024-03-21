@@ -33,12 +33,16 @@ export function ToDoList(props: PropsType) {
     props.changeFilter('complited', props.id);
   }
 
+  function addTask(title: string) {
+    props.addTask(title, props.id);
+  }
+
   return (
     <div className="container">
       <h2>
         {props.title} <button onClick={() => props.removeTaskList(props.id)}>x</button>
       </h2>
-      <AddItemForm addTask={props.addTask} id={props.id} />
+      <AddItemForm addItem={addTask} />
       <ul>
         {props.tasks.map((task: TaskType) => {
           function onChangeHandler() {

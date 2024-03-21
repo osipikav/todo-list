@@ -2,6 +2,7 @@ import { FilterTypes, TaskType, ToDoList } from 'components/ToDoList';
 import './index.scss';
 import { useState } from 'react';
 import { v1 } from 'uuid';
+import { AddItemForm } from 'components/AddItemForm/AddItemForm';
 
 export interface TaskListType {
   id: string;
@@ -89,6 +90,11 @@ export const App = () => {
 
   return (
     <div className="App">
+      <AddItemForm
+        addItem={(title) => {
+          alert(title);
+        }}
+      />
       {todolists.map((ti) => {
         let tasksForToDoList = ti.taskList;
         if (ti.filter === 'complited') {
