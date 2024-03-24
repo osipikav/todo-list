@@ -1,10 +1,11 @@
 import { AddItemForm } from 'components/AddItemForm/AddItemForm';
+import { EditableSpan } from 'components/EditableSpan/EditableSpan';
 
 export type FilterTypes = 'all' | 'active' | 'complited';
 
 type PropsType = {
   id: string;
-  title?: string;
+  title: string;
   tasks: TaskType[];
   removeTask: (taskId: string, todolistId: string) => void;
   changeFilter: (filterValue: FilterTypes, todolistId: string) => void;
@@ -12,6 +13,8 @@ type PropsType = {
   changeTaskStatus: (taskId: string, todolistId: string) => void;
   filter: FilterTypes;
   removeTaskList: (todolistId: string) => void;
+  changeTodolistTitle: (todolistId: string, newTitle: string) => void;
+  changeTaskTitle: (taskId: string, todolistId: string, newTitle: string) => void;
 };
 
 export interface TaskType {
@@ -37,10 +40,15 @@ export function ToDoList(props: PropsType) {
     props.addTask(title, props.id);
   }
 
+  function changeTodolistTitle(newTitle: string) {
+    props.changeTodolistTitle(props.id, newTitle);
+  }
+
   return (
     <div className="container">
       <h2>
-        {props.title} <button onClick={() => props.removeTaskList(props.id)}>x</button>
+        <EditableSpan title={props.title} onChangeTitle={changeTodolistTitle} />
+        <button onClick={() => props.removeTaskList(props.id)}>x</button>
       </h2>
       <AddItemForm addItem={addTask} />
       <ul>
@@ -52,10 +60,14 @@ export function ToDoList(props: PropsType) {
           function removeTask() {
             props.removeTask(task.id, props.id);
           }
+
+          function changeTaskTitle(newTitle: string) {
+            props.changeTaskTitle(task.id, props.id, newTitle);
+          }
           return (
-            <li key={task.id}>
+            <li key={task.id} className={task.isDone ? 'is-done' : ''}>
               <input type="checkbox" checked={task.isDone} onChange={onChangeHandler} />
-              <span className={task.isDone ? 'is-done' : ''}>{task.task}</span>
+              <EditableSpan title={task.task} onChangeTitle={changeTaskTitle} />
               <button onClick={removeTask}>x</button>
             </li>
           );

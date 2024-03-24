@@ -83,18 +83,45 @@ export const App = () => {
     setTodolists(updatedTodolists);
   }
 
+  function changeTaskTitle(taskId: string, todolistId: string, newTitle: string) {
+    const updatedTodolists = todolists.map((todolist) => {
+      if (todolist.id === todolistId) {
+        const updatedTaskList = todolist.taskList.map((task) => {
+          if (task.id === taskId) {
+            return { ...task, task: newTitle };
+          }
+          return task;
+        });
+        return { ...todolist, taskList: updatedTaskList };
+      }
+      return todolist;
+    });
+    setTodolists(updatedTodolists);
+  }
+
   function removeTaskList(todolistId: string) {
     const updatedTodolists = todolists.filter((todolist) => todolist.id !== todolistId);
     setTodolists(updatedTodolists);
   }
 
+  function addTodolist(title: string) {
+    const newTodolistItem: TaskListType = { id: v1(), taskList: [], title: title, filter: 'all' };
+    const updatedTodolists = [newTodolistItem, ...todolists];
+    setTodolists(updatedTodolists);
+  }
+  function changeTodolistTitle(todolistId: string, newTitle: string) {
+    const updatedTodolists = todolists.map((todolist) => {
+      if (todolist.id === todolistId) {
+        return { ...todolist, title: newTitle };
+      }
+      return todolist;
+    });
+    setTodolists(updatedTodolists);
+  }
+
   return (
     <div className="App">
-      <AddItemForm
-        addItem={(title) => {
-          alert(title);
-        }}
-      />
+      <AddItemForm addItem={(title) => addTodolist(title)} />
       {todolists.map((ti) => {
         let tasksForToDoList = ti.taskList;
         if (ti.filter === 'complited') {
@@ -115,6 +142,8 @@ export const App = () => {
             changeTaskStatus={changeTaskStatus}
             filter={ti.filter}
             removeTaskList={removeTaskList}
+            changeTodolistTitle={changeTodolistTitle}
+            changeTaskTitle={changeTaskTitle}
           />
         );
       })}
