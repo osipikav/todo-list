@@ -5,7 +5,6 @@ type EditableSpanPropsType = { title: string; onChangeTitle: (newTitle: string) 
 export function EditableSpan(props: EditableSpanPropsType) {
   const [editMode, setEditMode] = useState(false);
   const [title, setTitle] = useState('');
-  // const [error, setError] = useState('');
 
   function activateEditMode() {
     setTitle(props.title);
@@ -19,8 +18,6 @@ export function EditableSpan(props: EditableSpanPropsType) {
 
   function onTitleHandler(e: ChangeEvent<HTMLInputElement>) {
     setTitle(e.currentTarget.value);
-    // setError('');
-    // console.log(e.currentTarget.value, title);
   }
 
   return editMode ? (

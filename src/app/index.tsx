@@ -110,13 +110,11 @@ export const App = () => {
     setTodolists(updatedTodolists);
   }
   function changeTodolistTitle(todolistId: string, newTitle: string) {
-    const updatedTodolists = todolists.map((todolist) => {
-      if (todolist.id === todolistId) {
-        return { ...todolist, title: newTitle };
-      }
-      return todolist;
-    });
-    setTodolists(updatedTodolists);
+    const todolist = todolists.find((todolist) => todolist.id === todolistId);
+    if (todolist) {
+      todolist.title = newTitle;
+      setTodolists([...todolists]);
+    }
   }
 
   return (
