@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, Checkbox, IconButton } from '@mui/material';
 import { AddItemForm } from 'components/AddItemForm/AddItemForm';
 import { EditableSpan } from 'components/EditableSpan/EditableSpan';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -50,16 +50,12 @@ export function ToDoList(props: PropsType) {
     <div className="container">
       <h2>
         <EditableSpan title={props.title} onChangeTitle={changeTodolistTitle} />
-        <Button
-          variant="contained"
-          startIcon={<DeleteIcon />}
-          onClick={() => props.removeTaskList(props.id)}
-        >
-          delete
-        </Button>
+        <IconButton aria-label="delete" onClick={() => props.removeTaskList(props.id)}>
+          <DeleteIcon fontSize="inherit" color="primary" />
+        </IconButton>
       </h2>
       <AddItemForm addItem={addTask} />
-      <ul>
+      <div>
         {props.tasks.map((task: TaskType) => {
           function onChangeHandler() {
             props.changeTaskStatus(task.id, props.id);
@@ -73,36 +69,35 @@ export function ToDoList(props: PropsType) {
             props.changeTaskTitle(task.id, props.id, newTitle);
           }
           return (
-            <li key={task.id} className={task.isDone ? 'is-done' : ''}>
-              <input type="checkbox" checked={task.isDone} onChange={onChangeHandler} />
+            <div key={task.id} className={task.isDone ? 'is-done' : ''}>
+              <Checkbox
+                checked={task.isDone}
+                onChange={onChangeHandler}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
               <EditableSpan title={task.task} onChangeTitle={changeTaskTitle} />
-              <Button
-                variant="contained"
-                size="small"
-                startIcon={<DeleteIcon />}
-                onClick={removeTask}
-              >
-                delete
-              </Button>
-            </li>
+              <IconButton aria-label="delete" size="small" onClick={removeTask}>
+                <DeleteIcon fontSize="inherit" color="primary" />
+              </IconButton>
+            </div>
           );
         })}
-      </ul>
+      </div>
       <div>
         <Button
-          variant={props.filter === 'all' ? 'outlined' : 'contained'}
+          variant={props.filter === 'all' ? 'contained' : 'outlined'}
           onClick={onAllClickHandler}
         >
           All
         </Button>
         <Button
-          variant={props.filter === 'active' ? 'outlined' : 'contained'}
+          variant={props.filter === 'active' ? 'contained' : 'outlined'}
           onClick={onActiveClickHandler}
         >
           Active
         </Button>
         <Button
-          variant={props.filter === 'complited' ? 'outlined' : 'contained'}
+          variant={props.filter === 'complited' ? 'contained' : 'outlined'}
           onClick={onComplitedClickHandler}
         >
           Complited
