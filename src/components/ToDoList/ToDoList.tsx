@@ -8,18 +8,18 @@ export type FilterTypes = 'all' | 'active' | 'complited';
 type PropsType = {
   id: string;
   title: string;
-  tasks: TaskType[];
+  tasks: TaskItemType[];
   removeTask: (taskId: string, todolistId: string) => void;
   changeFilter: (filterValue: FilterTypes, todolistId: string) => void;
   addTask: (value: string, todolistId: string) => void;
   changeTaskStatus: (taskId: string, todolistId: string) => void;
   filter: FilterTypes;
-  removeTaskList: (todolistId: string) => void;
+  removeTodolist: (todolistId: string) => void;
   changeTodolistTitle: (todolistId: string, newTitle: string) => void;
   changeTaskTitle: (taskId: string, todolistId: string, newTitle: string) => void;
 };
 
-export interface TaskType {
+export interface TaskItemType {
   id: string;
   task: string;
   isDone: boolean;
@@ -50,13 +50,13 @@ export function ToDoList(props: PropsType) {
     <div className="container">
       <h2>
         <EditableSpan title={props.title} onChangeTitle={changeTodolistTitle} />
-        <IconButton aria-label="delete" onClick={() => props.removeTaskList(props.id)}>
+        <IconButton aria-label="delete" onClick={() => props.removeTodolist(props.id)}>
           <DeleteIcon fontSize="inherit" color="primary" />
         </IconButton>
       </h2>
       <AddItemForm addItem={addTask} />
       <div>
-        {props.tasks.map((task: TaskType) => {
+        {props.tasks.map((task: TaskItemType) => {
           function onChangeHandler() {
             props.changeTaskStatus(task.id, props.id);
           }
