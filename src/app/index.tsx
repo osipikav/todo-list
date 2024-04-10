@@ -14,6 +14,7 @@ import {
   Typography,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+// import { useDispatch } from 'react-redux';
 
 export interface TodolistType {
   id: string;
@@ -39,6 +40,7 @@ export const App = () => {
   ];
 
   const [todolists, setTodolists] = useState<TodolistType[]>(initTodolists);
+  // const dispatch = useDispatch;
 
   function removeTask(id: string, todolistId: string) {
     const updatedTodolists = todolists.map((todolist) => {
